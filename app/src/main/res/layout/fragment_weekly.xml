@@ -1,0 +1,35 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/weeklyRelativeLayout"
+    >
+    <TextView
+        android:id="@+id/hintWeeklyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/enter_the_location"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="42sp"/>
+    <ImageView
+        android:id="@+id/weeklyArrowImageView"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_above="@id/hintWeeklyTextView"
+        android:src="@mipmap/ic_arrow_up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>
