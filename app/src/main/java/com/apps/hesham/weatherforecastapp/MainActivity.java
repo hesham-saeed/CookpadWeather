@@ -72,8 +72,7 @@ public class MainActivity extends AppCompatActivity implements TemperatureFinder
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             SharedPreferences sharedPreferences =
-                    getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                            , MODE_PRIVATE);
+                    getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 sharedPreferences.edit().putBoolean("locationEnabled", true).apply();
@@ -109,8 +108,7 @@ public class MainActivity extends AppCompatActivity implements TemperatureFinder
 
     private String getTemperatureUnits() {
         SharedPreferences sharedPreferences =
-                getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                        , MODE_PRIVATE);
+                getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
         if (sharedPreferences.getBoolean("locationEnabled", false)){
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                 if (locationManager != null)
@@ -171,8 +169,7 @@ public class MainActivity extends AppCompatActivity implements TemperatureFinder
 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             SharedPreferences sharedPreferences =
-                    getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                            , MODE_PRIVATE);
+                    getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
             sharedPreferences.edit().putBoolean("locationEnabled", true).apply();
 
         } else {
@@ -290,10 +287,10 @@ public class MainActivity extends AppCompatActivity implements TemperatureFinder
 
         //Handling screen orientation changes
         if (TemperatureFinder.sTemperatureData != null && TemperatureFinder.sTemperatureData.size() > 0) {
-            tabLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second));
-            mLinearLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second));
+            tabLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second));
+            mLinearLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second));
             getSupportActionBar().setBackgroundDrawable
-                    (new ColorDrawable(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second)));
+                    (new ColorDrawable(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second)));
 
         }
 
@@ -335,10 +332,10 @@ public class MainActivity extends AppCompatActivity implements TemperatureFinder
         weeklyListener.editViewsSuccess(locationName);
         weeklyListener.onUnitsChange(temperatureUnit);
 
-        tabLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second));
-        mLinearLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second));
+        tabLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second));
+        mLinearLayout.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second));
         getSupportActionBar().setBackgroundDrawable
-                (new ColorDrawable(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second)));
+                (new ColorDrawable(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second)));
 
         progressDialog.hide();
     }

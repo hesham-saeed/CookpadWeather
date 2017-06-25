@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class DailyFragment extends Fragment implements FragmentViewListener {
 
-    public final static String DailyFragment = "DailyFragment";
     private TextView locationTextView;
     private TextView dayTextView;
     private TextView descriptionTextView;
@@ -56,7 +55,7 @@ public class DailyFragment extends Fragment implements FragmentViewListener {
 
         //Handling screen orientations
         if (TemperatureFinder.sTemperatureData != null && TemperatureFinder.sTemperatureData.size() > 0){
-            editViewsSuccess(TemperatureFinder.sTemperatureData.get(0).city);
+            editViewsSuccess(TemperatureFinder.sTemperatureData.get(0).getCity());
             onUnitsChange(getTemperatureUnits());
         }
 
@@ -69,16 +68,19 @@ public class DailyFragment extends Fragment implements FragmentViewListener {
 
         if (arrowImageView == null)
             arrowImageView = (ImageView)getView().findViewById(R.id.arrowImageView);
+        if (arrowImageView != null)
         arrowImageView.setVisibility(View.INVISIBLE);
 
         if (hintTextView == null)
             hintTextView = (TextView) getView().findViewById(R.id.hintTextView);
+        if (hintTextView != null)
         hintTextView.setVisibility(View.INVISIBLE);
 
         if (dailyRelativeLayout == null)
             dailyRelativeLayout = (RelativeLayout) getView().findViewById(R.id.dailyRelativeLayout);
+        if (dailyRelativeLayout != null)
         dailyRelativeLayout.setBackgroundColor
-                (Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).first));
+                (Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).first));
 
 
         List<TemperatureData> tempData = TemperatureFinder.sTemperatureData;
@@ -86,25 +88,25 @@ public class DailyFragment extends Fragment implements FragmentViewListener {
         //if (locationName == null || locationName == "")
         //    locationName = tempData.get(0).countryCode;
 
-        if (tempData.get(0).city != null && !(tempData.get(0).city.equals("")))
-            locationName = tempData.get(0).city;
+        if (tempData.get(0).getCity() != null && !(tempData.get(0).getCity().equals("")))
+            locationName = tempData.get(0).getCity();
 
         locationName =  Character.toUpperCase(locationName.charAt(0)) + locationName.substring(1);
 
         locationTextView.setText(locationName);
 
-        descriptionTextView.setText(tempData.get(0).description);
+        descriptionTextView.setText(tempData.get(0).getDescription());
 
-        dayTextView.setText(tempData.get(0).day + symbol);
+        dayTextView.setText(tempData.get(0).getDay() + symbol);
 
-        nightTextView.setText("Night: " + tempData.get(0).night + symbol);
+        nightTextView.setText("Night: " + tempData.get(0).getNight() + symbol);
 
-        String minMax = "Min: " + tempData.get(0).min + symbol  + "  |  " + "Max: " + tempData.get(0).max + symbol;
+        String minMax = "Min: " + tempData.get(0).getMin() + symbol  + "  |  " + "Max: " + tempData.get(0).getMax() + symbol;
         minMaxTextView.setText(minMax);
 
-        Picasso.with(getActivity()).load(tempData.get(0).iconURL).into(weatherIcon);
+        Picasso.with(getActivity()).load(tempData.get(0).getIconURL()).into(weatherIcon);
 
-        humidityTextView.setText("Humidity: " + tempData.get(0).humidity+"%");
+        humidityTextView.setText("Humidity: " + tempData.get(0).getHumidity()+"%");
 
     }
 
@@ -114,10 +116,10 @@ public class DailyFragment extends Fragment implements FragmentViewListener {
         if (unit .equals(""))
             return;
 
-        Double day = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).day);
-        Double night = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).night);
-        Double min = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).min);
-        Double max = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).max);
+        Double day = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).getDay());
+        Double night = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).getNight());
+        Double min = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).getMin());
+        Double max = Double.valueOf(TemperatureFinder.sTemperatureData.get(0).getMax());
 
         if (unit.equals("Celsius")){
             symbol = "\u2103";
@@ -149,8 +151,7 @@ public class DailyFragment extends Fragment implements FragmentViewListener {
 
     private String getTemperatureUnits(){
         SharedPreferences sharedPreferences =
-                getActivity().getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                        , getActivity().MODE_PRIVATE);
+                getActivity().getSharedPreferences("com.apps.hesham.weatherforecastapp", getActivity().MODE_PRIVATE);
         return sharedPreferences.getString("DefaultUnits", "");
     }
 }

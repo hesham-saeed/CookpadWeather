@@ -3,6 +3,7 @@ package com.apps.hesham.weatherforecastapp;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.util.Pair;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -91,10 +92,8 @@ public class TemperatureFinder {
                 }
                 return buffer.toString();
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                listener.onFailure();
             }
 
 
@@ -132,34 +131,39 @@ public class TemperatureFinder {
             JSONObject jsonListItem = jsonList.getJSONObject(i);
 
             JSONObject jsonTemp = jsonListItem.getJSONObject("temp");
-            dayData.day = jsonTemp.getString("day");
-            dayData.day = String.format("%.0f", new Double(dayData.day));
-            dayData.min = jsonTemp.getString("min");
-            dayData.min = String.format("%.0f", new Double(dayData.min));
-            dayData.max = jsonTemp.getString("max");
-            dayData.max = String.format("%.0f", new Double(dayData.max));
-            dayData.night = jsonTemp.getString("night");
-            dayData.night = String.format("%.0f", new Double(dayData.night));
+            //dayData.day = jsonTemp.getString("day");
+            dayData.setDay(String.format("%.0f", new Double(jsonTemp.getString("day"))));
+            //dayData.min = jsonTemp.getString("min");
+            dayData.setMin(String.format("%.0f", new Double(jsonTemp.getString("min"))));
+            //dayData.max = jsonTemp.getString("max");
+            dayData.setMax(String.format("%.0f", new Double(jsonTemp.getString("max"))));
+            //dayData.night = jsonTemp.getString("night");
+            dayData.setNight(String.format("%.0f", new Double(jsonTemp.getString("night"))));
 
 
-            dayData.humidity = jsonListItem.getString("humidity");
-
+            //dayData.humidity = jsonListItem.getString("humidity");
+            dayData.setHumidity(jsonListItem.getString("humidity"));
 
             JSONArray weatherArray = jsonListItem.getJSONArray("weather");
 
-            dayData.main = weatherArray.getJSONObject(0).getString("main");
-            dayData.description = weatherArray.getJSONObject(0).getString("description");
-            dayData.city = locationName;
+            //dayData.main = weatherArray.getJSONObject(0).getString("main");
+            dayData.setMain(weatherArray.getJSONObject(0).getString("main"));
+            //dayData.description = weatherArray.getJSONObject(0).getString("description");
+            dayData.setDescription(weatherArray.getJSONObject(0).getString("description"));
+            //dayData.city = locationName;
+            dayData.setCity(locationName);
 
             String icon = weatherArray.getJSONObject(0).getString("icon");
-            dayData.iconURL = iconURL + icon + ".png";
-
+            //dayData.iconURL = iconURL + icon + ".png";
+            dayData.setIconURL(iconURL + icon + ".png");
 
             String code = weatherArray.getJSONObject(0).getString("id").substring(0, 1);
             Integer codeInt = Integer.parseInt(code);
-            dayData.code = codeInt;
+            //dayData.code = codeInt;
+            dayData.setCode(codeInt);
 
-            dayData.countryCode = city.getString("country");
+            //dayData.countryCode = city.getString("country");
+            dayData.setCountryCode(city.getString("country"));
 
             SimpleDateFormat sdf = new SimpleDateFormat("EEE");
             Date date = new Date();
@@ -167,7 +171,8 @@ public class TemperatureFinder {
             c.setTime(date);
             c.add(Calendar.DATE, i);
             date = c.getTime();
-            dayData.dayOfWeek = sdf.format(date);
+            //dayData.dayOfWeek = sdf.format(date);
+            dayData.setDayOfWeek(sdf.format(date));
 
             sTemperatureData.add(dayData);
         }

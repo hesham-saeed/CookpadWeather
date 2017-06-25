@@ -53,7 +53,7 @@ public class WeeklyFragment extends Fragment implements FragmentViewListener {
 
 
         if (TemperatureFinder.sTemperatureData != null && TemperatureFinder.sTemperatureData.size() > 0){
-            editViewsSuccess(TemperatureFinder.sTemperatureData.get(0).city);
+            editViewsSuccess(TemperatureFinder.sTemperatureData.get(0).getCity());
         }
 
         return view;
@@ -64,20 +64,24 @@ public class WeeklyFragment extends Fragment implements FragmentViewListener {
     public void editViewsSuccess(String locationName) {
         if (arrowWeeklyImageView == null)
             arrowWeeklyImageView = (ImageView) getView().findViewById(R.id.weeklyArrowImageView);
+        if (arrowWeeklyImageView != null)
         arrowWeeklyImageView.setVisibility(View.INVISIBLE);
 
         if (hintWeeklyTextView == null)
             hintWeeklyTextView = (TextView) getView().findViewById(R.id.hintWeeklyTextView);
+        if (hintWeeklyTextView != null)
         hintWeeklyTextView.setVisibility(View.INVISIBLE);
 
         if (weeklyRelativeLayout == null)
             weeklyRelativeLayout = (RelativeLayout)getView().findViewById(R.id.weeklyRelativeLayout);
+        if (weeklyRelativeLayout != null)
         weeklyRelativeLayout.setBackgroundColor
-                (Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).first));
+                (Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).first));
 
         if (recyclerView == null)
             recyclerView = (RecyclerView) getView().findViewById(R.id.recyclerView);
-        recyclerView.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).second));
+        if (recyclerView != null)
+        recyclerView.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).second));
 
         adapter = new dayAdapter();
         recyclerView.setAdapter(adapter);
@@ -110,13 +114,13 @@ public class WeeklyFragment extends Fragment implements FragmentViewListener {
         public dayHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View view = layoutInflater.inflate(R.layout.day_item, parent, false);
-            view.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).code).first));
+            view.setBackgroundColor(Color.parseColor(TemperatureFinder.codeColors.get(TemperatureFinder.sTemperatureData.get(0).getCode()).first));
             return new dayHolder(view);
         }
 
         @Override
         public void onBindViewHolder(dayHolder holder, int position) {
-            Double day = Double.valueOf(tempData.get(position).day);
+            Double day = Double.valueOf(tempData.get(position).getDay());
             String unit = getTemperatureUnits();
             if (unit.equals("Celsius")){
                 symbol = "\u2103";
@@ -131,8 +135,8 @@ public class WeeklyFragment extends Fragment implements FragmentViewListener {
             }
 
             holder.weeklyDateDegreeTextView.setText(String.format("%.0f", new Double(day)) + symbol);
-            Picasso.with(getActivity()).load(tempData.get(0).iconURL).into(holder.weeklyDayIconImageView);
-            holder.weeklyDayTextView.setText(tempData.get(position).dayOfWeek);
+            Picasso.with(getActivity()).load(tempData.get(0).getIconURL()).into(holder.weeklyDayIconImageView);
+            holder.weeklyDayTextView.setText(tempData.get(position).getDayOfWeek());
 
         }
 
@@ -150,8 +154,7 @@ public class WeeklyFragment extends Fragment implements FragmentViewListener {
 
     private String getTemperatureUnits(){
         SharedPreferences sharedPreferences =
-                getActivity().getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                        , getActivity().MODE_PRIVATE);
+                getActivity().getSharedPreferences("com.apps.hesham.weatherforecastapp", getActivity().MODE_PRIVATE);
         return sharedPreferences.getString("DefaultUnits", "");
     }
 

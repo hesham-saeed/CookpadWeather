@@ -37,8 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             SharedPreferences sharedPreferences =
-                    getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                            , MODE_PRIVATE);
+                    getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             {
                 sharedPreferences.edit().putBoolean("locationEnabled",true).apply();
@@ -59,8 +58,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
-
         celsiusRadioButton = (RadioButton)findViewById(R.id.celsiusRadioButton);
         fahrenheitRadioButton = (RadioButton)findViewById(R.id.fahrenheitRadioButton);
         kelvinRadioButton = (RadioButton)findViewById(R.id.kelvinRadioButton);
@@ -77,8 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         SharedPreferences sharedPreferences =
-                getSharedPreferences("com.apps.hesham.alertdialog_actionbar_sharedpreferences"
-                        , MODE_PRIVATE);
+                getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
         Boolean locationEnabled = sharedPreferences.getBoolean("locationEnabled", false);
         if (locationEnabled) {
             locationEnabledButton.setEnabled(false);
@@ -124,15 +120,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void saveToPermenantStorage(String defUnits){
         SharedPreferences sharedPreferences =
-                getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                        , MODE_PRIVATE);
+                getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
         sharedPreferences.edit().putString("DefaultUnits",defUnits).apply();
     }
 
     private String getPermenantStorage(){
         SharedPreferences sharedPreferences =
-                getSharedPreferences("com.apps.hesham.weatherforecastapp"
-                        , MODE_PRIVATE);
+                getSharedPreferences("com.apps.hesham.weatherforecastapp", MODE_PRIVATE);
         return sharedPreferences.getString("DefaultUnits", "");
     }
 
